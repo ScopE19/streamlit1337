@@ -37,3 +37,4 @@ elif page == 'Project3':
 else:
     Home.Home().app()
 st.title('hi')
+st.image('./monke.png')
