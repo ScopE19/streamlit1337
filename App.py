@@ -7,7 +7,8 @@ st.set_page_config(initial_sidebar_state='collapsed')
 pages = ["Home","Project1","Project2","Project3"]
 styles = {
     "nav": {
-        "background-color": "rgb(123, 209, 146)"
+        "background-color": "rgb(123, 209, 146)",
+        "font-size": "1.5rem" 
     },
     "div": {
         "max-width": "32rem"
@@ -37,3 +38,4 @@ elif page == 'Project3':
 else:
     Home.Home().app()
 st.title('hi')
+st.image('./src/monke.png')
