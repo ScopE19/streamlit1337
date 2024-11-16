@@ -24,9 +24,21 @@ class Project1:
             stress_levels = df['Stress_Level'].unique()
             selected_levels = st.multiselect('Select Stress Level(s)', options=stress_levels, default=stress_levels)
             filtered_df = df[df['Stress_Level'].isin(selected_levels)]
-            st.dataframe(filtered_df, height=400, width=600)
+            st.dataframe(filtered_df, height=400, width=800)
         else:
             st.warning('Please upload a CSV file')
+        st.title("Tekken EVO results 2005-2024 ")
+        csv_path = "./src/Tekken EVO Results 2005-2024.csv"  # Replace with your CSV file path
+        df = pd.read_csv(csv_path)
+        st.write("Tekken EVO results 2005-2024 (preloaded DataFrame):")
+        st.dataframe(df)
+        column1 = st.selectbox('Choose column for filter', df.columns)
+        if column1:
+                unique_values = df[column1].unique()
+                selected_values = st.multiselect(f"Select values for {column1}", options=unique_values, default=unique_values)
+                filtered_df = df[df[column1].isin(selected_values)]
+                st.dataframe(filtered_df, height=400, width=800)
+      
         st.markdown("""<style>
                     h1 {
                     color: green;
