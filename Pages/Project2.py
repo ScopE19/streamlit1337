@@ -39,53 +39,53 @@ class Project2:
                 if video_url:
                     st.video(video_url)
 
-            elif source_option == "Local drive":
-                video_file = st.file_uploader("Upload video", type=["mp4", "avi", "mov"])
-                if video_file:
+        elif source_option == "Local drive":
+            video_file = st.file_uploader("Upload video", type=["mp4", "avi", "mov"])
+            if video_file:
 
-                    temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=Path(video_file.name).suffix)
-                    temp_file.write(video_file.read())
-                    video_url = temp_file.name
-                    st.video(video_url)
+                temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=Path(video_file.name).suffix)
+                temp_file.write(video_file.read())
+                video_url = temp_file.name
+                st.video(video_url)
 
-            elif source_option == "Web-camera":
-                st.write("It is launching of webcam...")
-                webrtc_streamer(key="webcam", mode=WebRtcMode.SENDRECV)
-            elif source_option == "RTSP":
-                rtsp_url = st.text_input("Put in a rtsp link")
-                if rtsp_url:
-                    video_url = rtsp_url
+        elif source_option == "Web-camera":
+            st.write("It is launching of webcam...")
+            webrtc_streamer(key="webcam", mode=WebRtcMode.SENDRECV)
+        elif source_option == "RTSP":
+            rtsp_url = st.text_input("Put in a rtsp link")
+            if rtsp_url:
+                video_url = rtsp_url
             
-            run_button = st.button("Run")
-            frame_place = st.empty()
+        run_button = st.button("Run")
+        frame_place = st.empty()
 
-            if source_option == "Mobile camera" and img_file is not None:
-                file_bytes = np.asarray(bytearray(img_file.read()), dtype=np.uint8)
-                frame = cv2.imdecode(file_bytes, flags=1)
-                st.image(frame, channels="BGR")
+        if source_option == "Mobile camera" and img_file is not None:
+            file_bytes = np.asarray(bytearray(img_file.read()), dtype=np.uint8)
+            frame = cv2.imdecode(file_bytes, flags=1)
+            st.image(frame, channels="BGR")
 
-            elif run_button and video_url is not None and source_option in ["Local drive", "RTSP"]:
-                self.cap = cv2.VideoCapture(video_url)
+        elif run_button and video_url is not None and source_option in ["Local drive", "RTSP"]:
+            self.cap = cv2.VideoCapture(video_url)
 
-                if not self.cap.isOpened():
-                    st.error("Error")
-                else:
+            if not self.cap.isOpened():
+                st.error("Error")
+            else:
 
-                    stop_button = st.button("Stop!!")
+                stop_button = st.button("Stop!!")
 
-                    while self.cap.isOpened() and not stop_button:
-                        ret, frame = self.cap.read()
-                        if not ret:
-                            st.write("Access is denied")
-                            break
+                while self.cap.isOpened() and not stop_button:
+                    ret, frame = self.cap.read()
+                    if not ret:
+                        st.write("Access is denied")
+                        break
 
-                        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                        frame_place.image(frame, channels="RGB")
+                    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                    frame_place.image(frame, channels="RGB")
 
-                        if stop_button:
-                            break
+                    if stop_button:
+                        break
                         
-                    self.cap.release()
-                    cv2.destroyAllWindows()
+                self.cap.release()
+                cv2.destroyAllWindows()
 app = Project2()
 app.app()
