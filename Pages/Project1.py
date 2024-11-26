@@ -28,7 +28,7 @@ class Project1:
         else:
             st.warning('Please upload a CSV file')
         st.title("Tekken EVO results 2005-2024 ")
-        csv_path = "./src/Tekken EVO Results 2005-2024.csv"  # Replace with your CSV file path
+        csv_path = "./src/Tekken EVO Results 2005-2024.csv"
         df = pd.read_csv(csv_path)
         st.write("Tekken EVO results 2005-2024 (preloaded DataFrame):")
         st.dataframe(df)
